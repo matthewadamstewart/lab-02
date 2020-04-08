@@ -1,7 +1,7 @@
 'use strict';
 //Global varibles 
 let animalHorns = [];// global varibles animal horns array for pictures of animal horns 
-let animalKeywords = []; // global varibles for array of keywords
+let failedKeywordTest = []; // global varibles for array of keywords
 
 //constructor
 function Horns(obj)// constructor function for the objects in the json file 
@@ -26,13 +26,33 @@ Horns.prototype.renderImage = function() { // made a prototype for Horns constru
   $('main').append($section); //this added the section with all of its contends defined above to the end of the main element
 }
 //filter keywords
+Horns.prototype.keyWordTest = function() {// function for keyword drop down
+  if(!failedKeywordTest.includes(this.keyword)) { // if the keyword dosnt match it will send it to another array which is used to exclude animals from the display 
+    failedKeywordTest.push(this.keyword);
+  let $option = $(`<option value=${this.keyword}>${this.keyword}</option>`)//giving the option the value of keyword and add display text
+  $('select').append($option); //adds above to page in select element
+  }
+}
+function filter(event) {
+  let id = event.target.value;
+  animalHorns.forEach(animalObject => {
+    $(`section[id=${animalObject.keyword}]`).show();
+    if (id !== animalObject.keyword) {
+      console.log('this is ID ' + id);
+      console.log('this is keyword ' + animalObject.keyword);
+      $(`section[id=${animalObject.keyword}]`).hide();
+    }
+  })
+}
 
 //AJAX
 
 $.ajax(`data/pag-1.json`).then(data => {
   data.forEach(hornAnimal=>{
   new Horns(hornAnimal).renderImage();
-  console.log(hornAnimal);
+  new Horns(hornAnimal).keyWordTest();
+  // console.log(hornAnimal);
   })
 
 })
+$('select').on('change', filter);

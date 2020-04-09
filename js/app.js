@@ -49,8 +49,9 @@ function filter(event) {
 
 $.ajax(`data/pag-1.json`).then(data => {
   data.forEach(hornAnimal=>{
-  new Horns(hornAnimal).renderImage();
-  new Horns(hornAnimal).keyWordTest();
+  let newHorn = new Horns(hornAnimal);
+  newHorn.renderImage();
+  newHorn.keyWordTest();
   // console.log(hornAnimal);
   })
 

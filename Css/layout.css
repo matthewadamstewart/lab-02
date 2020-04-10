@@ -1,0 +1,14 @@
+header {
+  text-align: center;
+}
+
+main {
+  display: flex;
+  flex-flow: wrap row;
+  justify-content: space-around;
+}
+
+section {
+  display: inline-block;
+  max-width: 200px;
+}
